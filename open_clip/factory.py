@@ -218,17 +218,17 @@ def create_model(
         if pretrained:
             checkpoint_path = ''
             pretrained_cfg = get_pretrained_cfg(model_name, pretrained)
-            print(model_name,pretrained)
+            print("model_name, pretrained", model_name,pretrained)
             if pretrained_cfg:
 
 
                 
-                pring(os.path.exists("/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                pring(os.path.exists("inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                pring(os.path.exists("../Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                pring(os.path.exists("./Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                pring(os.path.exists("Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                pring(os.path.exists("/Gaussian_Shading_ECC/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("../Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("./Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("/Gaussian_Shading_ECC/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # 在你的逻辑里这样用：
                 filename = "open_clip_pytorch_model.bin"
                 checkpoint_path = locate_file(filename)
