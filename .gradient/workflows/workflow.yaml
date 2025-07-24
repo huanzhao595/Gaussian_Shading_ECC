@@ -1,31 +1,25 @@
-version: '1'
-
+'on':
+  github:
+    branches:
+      only: main
 jobs:
   CloneRepo:
-    type: git-checkout@v1
     resources:
-      instance-type: P4000
+      instance-type: C5
     outputs:
       repo:
         type: volume
-
-  Gaussian_Shading_ECC:
-    type: script@v1
-    needs: [CloneRepo]
-    image: paperspace/gradient-base:pt211-tf215-cudatk120-py311-20240202
+    uses: git-checkout@v1
+    with:
+      url: context.event.github.url
+  HelloWorld:
     resources:
-      instance-type: P4000
+      instance-type: C5
+    needs:
+      - CloneRepo
     inputs:
       repo: CloneRepo.outputs.repo
-    commands:
-      - cd /inputs/repo
-      - pip install Pillow==6.2.1
-      - python run_gaussian_shading.py \
-          --jpeg_ratio 30 \
-          --fpr 0.000001 \
-          --channel_copy 1 \
-          --hw_copy 8 \
-          --chacha 1 \
-          --num 2 \
-          --reference_model ViT-g-14 \
-          --reference_model_pretrain laion2b_s12b_b42k
+    uses: script@v1
+    with:
+      script: python /inputs/repo/hello.py
+      image: tensorflow/tensorflow:1.14.0-py3
