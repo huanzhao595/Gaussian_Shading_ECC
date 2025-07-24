@@ -209,7 +209,7 @@ def create_model(
 
 
                 # checkpoint_path = '/public/yangzijin/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
-                checkpoint_path = 'Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
+                checkpoint_path = 'inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
 
 
 
