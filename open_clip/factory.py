@@ -18,12 +18,28 @@ from .openai import load_openai_model
 from .pretrained import is_pretrained_cfg, get_pretrained_cfg, download_pretrained, list_pretrained_tags_by_model, download_pretrained_from_hf
 from .transform import image_transform, AugmentationCfg
 from .tokenizer import HFTokenizer, tokenize
-
+import subprocess
 
 HF_HUB_PREFIX = 'hf-hub:'
 _MODEL_CONFIG_PATHS = [Path(__file__).parent / f"model_configs/"]
 _MODEL_CONFIGS = {}  # directory (model_name: config) of model architecture configs
 
+def locate_file(filename):
+    """
+    在全盘查找第一个匹配的文件名并返回绝对路径。
+    Raises FileNotFoundError 如果没找到。
+    """
+    try:
+        # '-type f' 只查普通文件；head -n1 拿第一个结果
+        cmd = f"find / -type f -name {filename} 2>/dev/null | head -n1"
+        path = subprocess.check_output(cmd, shell=True, text=True).strip()
+        if not path:
+            print(f"didnt find the file: {filename}")
+            raise FileNotFoundError(f"didnt find the file: {filename}")
+        print(f"successfully find the the file at path: {filename}")
+        return path
+    except subprocess.CalledProcessError as e:
+        raise FileNotFoundError(f"meet mistake when finding the file：{e}")
 
 def _natural_key(string_):
     return [int(s) if s.isdigit() else s for s in re.split(r'(\d+)', string_.lower())]
@@ -206,11 +222,18 @@ def create_model(
             if pretrained_cfg:
 
 
+                
+                
+                # 在你的逻辑里这样用：
+                filename = "open_clip_pytorch_model.bin"
+                checkpoint_path = locate_file(filename)
+                print(f"======[INFO] find pretrained at =====：{checkpoint_path}")
+                
 
 
                 # checkpoint_path = '/public/yangzijin/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
-                checkpoint_path = 'inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
-
+                # checkpoint_path = '/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
+                
 
 
 
