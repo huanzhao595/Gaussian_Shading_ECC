@@ -122,9 +122,12 @@ def create_model(
 ):
     has_hf_hub_prefix = model_name.startswith(HF_HUB_PREFIX)
     if has_hf_hub_prefix:
+        print("=======running the has_hf_hub_prefix====")
         model_id = model_name[len(HF_HUB_PREFIX):]
         checkpoint_path = download_pretrained_from_hf(model_id, cache_dir=cache_dir)
         config_path = download_pretrained_from_hf(model_id, filename='open_clip_config.json', cache_dir=cache_dir)
+
+        print(f"======[DEBUG] the loaction of the downloaded file：{checkpoint_path}======")
 
         with open(config_path, 'r', encoding='utf-8') as f:
             config = json.load(f)
