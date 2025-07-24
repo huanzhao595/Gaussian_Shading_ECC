@@ -31,7 +31,7 @@ def locate_file(filename):
     """
     try:
         # '-type f' 只查普通文件；head -n1 拿第一个结果
-        cmd = f"find / -type f -name {filename} 2>/dev/null | head -n1"
+        cmd = f"find $HOME -type f -name {filename} 2>/dev/null | head -n1"
         path = subprocess.check_output(cmd, shell=True, text=True).strip()
         if not path:
             print(f"didnt find the file: {filename}")
@@ -223,7 +223,12 @@ def create_model(
 
 
                 
-                
+                pring(os.path.exists("/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                pring(os.path.exists("inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                pring(os.path.exists("../Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                pring(os.path.exists("./Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                pring(os.path.exists("Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                pring(os.path.exists("/Gaussian_Shading_ECC/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # 在你的逻辑里这样用：
                 filename = "open_clip_pytorch_model.bin"
                 checkpoint_path = locate_file(filename)
