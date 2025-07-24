@@ -1,3 +1,5 @@
+# import cv2
+# from imwatermark import WatermarkDecoder, WatermarkEncoder
 import argparse
 import copy
 from tqdm import tqdm
@@ -9,11 +11,17 @@ import open_clip
 from optim_utils import *
 from io_utils import *
 from image_utils import *
-from watermark import *
+# from watermark import *
+# from watermark_bch1_63_7_repeat7 import *
+# from watermark_bch1_63_7_repeat3 import *
+# from watermark_bch1_63_7_repeat5 import *
+from watermark_bch1_63_1 import *
+# from watermark_bch1_63_1_remove_smoth_function import *
 
+# from watermark_bch1_2_63_7_repeat3 import *
+# from watermark_bch1_2_63_10_repeat5 import *
 
-
-
+# from watermark_rs_255_8 import *
 
 def main(args):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -26,7 +34,7 @@ def main(args):
     )
     pipe.safety_checker = None
     pipe = pipe.to(device)
-
+    print(args.reference_model)
     #reference model for CLIP Score
     if args.reference_model is not None:
         ref_model, _, ref_clip_preprocess = open_clip.create_model_and_transforms(args.reference_model,
@@ -38,9 +46,11 @@ def main(args):
     dataset, prompt_key = get_dataset(args)
 
     # class for watermark
-    if args.chacha:
+    if args.chacha == 1:
+        print("args.chacha")
         watermark = Gaussian_Shading_chacha(args.channel_copy, args.hw_copy, args.fpr, args.user_number)
     else:
+        print("args.chacha, no chacha")
         #a simple implement,
         watermark = Gaussian_Shading(args.channel_copy, args.hw_copy, args.fpr, args.user_number)
 
@@ -79,6 +89,15 @@ def main(args):
 
         # reverse img
         image_w_distortion = transform_img(image_w_distortion).unsqueeze(0).to(text_embeddings.dtype).to(device)
+
+        ##=====在此处获取加了水印的图片，然后解码，再对比准确度。=====####
+        # ALG = "dwtDct"
+        # BIT_LEN = 32  # 你存起来的长
+        # # IMG = "sd_out_wm.png"
+        # decode_message = pipe.decode_watermark_from_path(image_w_distortion, ALG, BIT_LEN)
+        # bitacc = pipe.eval_wm(args.rowmsg, decode_message)
+        
+        
         image_latents_w = pipe.get_image_latents(image_w_distortion, sample=False)
         reversed_latents_w = pipe.forward_diffusion(
             latents=image_latents_w,
@@ -92,15 +111,21 @@ def main(args):
         acc.append(acc_metric)
 
         #CLIP Score
+        print(args.reference_model)
+        print(args.reference_model is not None)
         if args.reference_model is not None:
+            # print("11111")
             socre = measure_similarity([image_w], current_prompt, ref_model,
                                               ref_clip_preprocess,
                                               ref_tokenizer, device)
             clip_socre = socre[0].item()
         else:
+            # print("222222")
             clip_socre = 0
         clip_scores.append(clip_socre)
 
+        print("acc_metric: ", acc, "clip_socre: ", clip_scores)
+        
     #tpr metric
     tpr_detection, tpr_traceability = watermark.get_tpr()
     #save metrics
@@ -109,18 +134,19 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Gaussian Shading')
-    parser.add_argument('--num', default=1000, type=int)
+    parser.add_argument('--num', default=1000, type=int) # 1000
     parser.add_argument('--image_length', default=512, type=int)
     parser.add_argument('--guidance_scale', default=7.5, type=float)
     parser.add_argument('--num_inference_steps', default=50, type=int)
     parser.add_argument('--num_inversion_steps', default=None, type=int)
     parser.add_argument('--gen_seed', default=0, type=int)
     parser.add_argument('--channel_copy', default=1, type=int)
-    parser.add_argument('--hw_copy', default=8, type=int)
+    parser.add_argument('--hw_copy', default=8, type=int) # 8
     parser.add_argument('--user_number', default=1000000, type=int)
     parser.add_argument('--fpr', default=0.000001, type=float)
     parser.add_argument('--output_path', default='./output/')
-    parser.add_argument('--chacha', action='store_true', help='chacha20 for cipher')
+    # parser.add_argument('--chacha', action='store_true', help='chacha20 for cipher')
+    parser.add_argument('--chacha', type=int, default=1, help='Use ChaCha20 for cipher (1=on, 0=off)')
     parser.add_argument('--reference_model', default=None)
     parser.add_argument('--reference_model_pretrain', default=None)
     parser.add_argument('--dataset_path', default='Gustavosta/Stable-Diffusion-Prompts')
