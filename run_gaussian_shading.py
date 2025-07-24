@@ -22,8 +22,13 @@ from watermark_bch1_63_1 import *
 # from watermark_bch1_2_63_10_repeat5 import *
 
 # from watermark_rs_255_8 import *
+import os
+
+
 
 def main(args):
+    # 打印当前工作目录
+    print("===current dir is ===", os.getcwd())
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     scheduler = DPMSolverMultistepScheduler.from_pretrained(args.model_path, subfolder='scheduler')
     pipe = InversableStableDiffusionPipeline.from_pretrained(
