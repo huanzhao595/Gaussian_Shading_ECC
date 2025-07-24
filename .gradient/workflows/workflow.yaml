@@ -23,7 +23,7 @@ jobs:
     with:
       script: |-
         cd /inputs/repo
-        pip install Pillow==6.2.1  
+        pip install -r requirements.txt
         python run_gaussian_shading.py \
           --jpeg_ratio 30 \
           --fpr 0.000001 \
