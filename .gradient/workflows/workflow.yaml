@@ -20,18 +20,18 @@ jobs:
     inputs:
       repo: CloneRepo.outputs.repo
     outputs:
-      repo:
+      model_cache:
         type: volume
     uses: script@v1
     with:
       script: |-
         cd /inputs/repo
-        cp -r . /outputs/repo
-        cd /outputs/repo
+        cp -r . /outputs/model_cache
+        cd /outputs/model_cache
         pwd
         ls -ld .
         ls -ld .
-        mkdir -p /outputs/repo/Diffusion/laion/laion2b_s12b_b42k
+        mkdir -p /outputs/model_cache/Diffusion/laion/laion2b_s12b_b42k
         pip install -r requirements.txt
         python run_gaussian_shading.py \
           --jpeg_ratio 30 \
