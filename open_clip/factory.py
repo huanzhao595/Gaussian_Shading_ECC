@@ -36,13 +36,17 @@ def locate_file(filename, search_paths=None):
     Returns:
         str: 文件的绝对路径。
     """
+    # 打印当前工作目录
+    print("===current dir is ===", os.getcwd())
     if search_paths is None:
         # 你可以根据实际情况添加更多路径或挂载点
         search_paths = [os.path.expanduser("~"), "/inputs/repo", "/"]
     
     for base_path in search_paths:
+        print(base_path)
         for dirpath, dirnames, filenames in os.walk(base_path, onerror=lambda e: None):
             if filename in filenames:
+                print(filename)
                 full_path = os.path.join(dirpath, filename)
                 print(f"Success: found file at {full_path}")
                 return full_path
