@@ -22,14 +22,10 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        # 1. 复制一份代码到 $HOME/repo（home 是可写的）
         cp -r /inputs/repo $HOME/repo
         cd $HOME/repo
-  
-        # 2. 让你的下载/缓存目录都在 home 里
         export OPENAI_CLIP_HOME=$HOME/repo/Diffusion/laion/laion2b_s12b_b42k
         mkdir -p $OPENAI_CLIP_HOME
-        
         pip install -r requirements.txt
         python run_gaussian_shading.py \
           --jpeg_ratio 30 \
