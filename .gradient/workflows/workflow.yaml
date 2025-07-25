@@ -30,10 +30,9 @@ jobs:
         ls -ld /outputs              
         ls -ld /outputs/repo         
         ls -la /outputs              
-        
-        echo testing > ./test.txt    && echo "cwd writable" || echo "cwd not writable"
-        echo testing > /inputs/repo/test.txt  echo "/inputs/repo writable" || echo "/inputs/repo not writable"
-        echo testing > /outputs/repo/x.txt && echo "/outputs/repo writable" || echo "/outputs/repo not writable"
+        echo testing > ./test.txt   
+        echo testing > /inputs/repo/test.txt  
+        echo testing > /outputs/repo/x.txt 
         cd /inputs/repo                         
         pip install -r requirements.txt
         python run_gaussian_shading.py \
