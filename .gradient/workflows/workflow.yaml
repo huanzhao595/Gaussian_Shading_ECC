@@ -25,20 +25,18 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        echo "当前目录：$(pwd)"
-        ls -ld .                     # cwd 权限
-        ls -ld /inputs/repo          # 只读
-        ls -ld /outputs              # /outputs 本身
-        ls -ld /outputs/repo         # /outputs 本身
-        ls -la /outputs              # /outputs 下到底有什么卷
+        ls -ld .                     
+        ls -ld /inputs/repo          
+        ls -ld /outputs              
+        ls -ld /outputs/repo         
+        ls -la /outputs              
         
-        # 测试写文件/文件夹
-        echo testing > ./test.txt    && echo "✅ cwd 可写" || echo "❌ cwd 不可写"
+        echo testing > ./test.txt    && echo "cwd writable" || echo "cwd not writable"
         echo testing > /inputs/repo/test.txt \
-                                      && echo "✅ /inputs/repo 可写" \
-                                      || echo "❌ /inputs/repo 不可写"
+                                      && echo "/inputs/repo writable" \
+                                      || echo "/inputs/repo not writable"
         echo testing > /outputs/repo/x.txt \
-                                      && echo "✅ /outputs/repo 可写" \
-                                      || echo "❌ /outputs/repo 不可写"
+                                      && echo "/outputs/repo writable" \
+                                      || echo "/outputs/repo not writable"
 
       image: paperspace/gradient-base:pt112-tf29-jax0317-py39-20230125
