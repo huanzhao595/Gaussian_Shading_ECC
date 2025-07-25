@@ -43,10 +43,11 @@ def locate_file(filename, search_paths=None):
         search_paths = [os.path.expanduser("~"), "/inputs/repo", "/"]
     
     for base_path in search_paths:
-        print(base_path)
+        print("base_path:", base_path)
         for dirpath, dirnames, filenames in os.walk(base_path, onerror=lambda e: None):
+            print("filenames:", filenames)
             if filename in filenames:
-                print(filename)
+                print("filename:", filename)
                 full_path = os.path.join(dirpath, filename)
                 print(f"Success: found file at {full_path}")
                 return full_path
