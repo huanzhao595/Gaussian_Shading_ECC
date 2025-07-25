@@ -40,7 +40,7 @@ def locate_file(filename, search_paths=None):
     print("===current dir is ===", os.getcwd())
     if search_paths is None:
         # 你可以根据实际情况添加更多路径或挂载点
-        search_paths = [os.path.expanduser("~"), "/inputs/repo", "/"]
+        search_paths = ["/tmp/repo"] # os.path.expanduser("~"), "/inputs/repo", "/", 
     
     for base_path in search_paths:
         print("base_path:", base_path)
