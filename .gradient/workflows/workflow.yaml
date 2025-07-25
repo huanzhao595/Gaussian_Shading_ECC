@@ -22,10 +22,15 @@ jobs:
     uses: script@v1
     with:
       script: |-
-        cp -r /inputs/repo /tmp/repo
-        cd /tmp/repo
-        export OPENAI_CLIP_HOME=/tmp/repo/Diffusion/laion/laion2b_s12b_b42k
-        mkdir -p $OPENAI_CLIP_HOME
+        pwd
+        ls -ld .
+        ls -ld .
+        cp -r /inputs/repo .
+        cd repo
+        mkdir -p Diffusion/laion/laion2b_s12b_b42k
+        pwd
+        ls -ld .
+        ls -ld .
         pip install -r requirements.txt
         python run_gaussian_shading.py \
           --jpeg_ratio 30 \
