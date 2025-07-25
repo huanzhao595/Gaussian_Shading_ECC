@@ -24,22 +24,30 @@ HF_HUB_PREFIX = 'hf-hub:'
 _MODEL_CONFIG_PATHS = [Path(__file__).parent / f"model_configs/"]
 _MODEL_CONFIGS = {}  # directory (model_name: config) of model architecture configs
 
-def locate_file(filename):
+
+def locate_file(filename, search_paths=None):
     """
-    在全盘查找第一个匹配的文件名并返回绝对路径。
-    Raises FileNotFoundError 如果没找到。
+    在指定路径列表中查找第一个匹配的文件名并返回绝对路径。
+    如果没找到，将抛出 FileNotFoundError。
+    
+    Args:
+        filename (str): 要查找的文件名。
+        search_paths (list[str], optional): 起始搜索路径列表，默认包含 $HOME 和根目录。
+    Returns:
+        str: 文件的绝对路径。
     """
-    try:
-        # '-type f' 只查普通文件；head -n1 拿第一个结果
-        cmd = f"find $HOME -type f -name {filename} 2>/dev/null | head -n1"
-        path = subprocess.check_output(cmd, shell=True, text=True).strip()
-        if not path:
-            print(f"didnt find the file: {filename}")
-            raise FileNotFoundError(f"didnt find the file: {filename}")
-        print(f"successfully find the the file at path: {filename}")
-        return path
-    except subprocess.CalledProcessError as e:
-        raise FileNotFoundError(f"meet mistake when finding the file：{e}")
+    if search_paths is None:
+        # 你可以根据实际情况添加更多路径或挂载点
+        search_paths = [os.path.expanduser("~"), "/inputs/repo", "/"]
+    
+    for base_path in search_paths:
+        for dirpath, dirnames, filenames in os.walk(base_path, onerror=lambda e: None):
+            if filename in filenames:
+                full_path = os.path.join(dirpath, filename)
+                print(f"Success: found file at {full_path}")
+                return full_path
+    print(f"didnt find the file: {filename}")
+    raise FileNotFoundError(f"didnt find the file: {filename}")
 
 def _natural_key(string_):
     return [int(s) if s.isdigit() else s for s in re.split(r'(\d+)', string_.lower())]
@@ -222,12 +230,17 @@ def create_model(
             if pretrained_cfg:
 
 
-                
-                print(os.path.exists("/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 print(os.path.exists("inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                print(os.path.exists("../Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                print(os.path.exists("./Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("./inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("../inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+
                 print(os.path.exists("Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("./Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("../Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                
+                
                 print(os.path.exists("/Gaussian_Shading_ECC/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # 在你的逻辑里这样用：
                 filename = "open_clip_pytorch_model.bin"
