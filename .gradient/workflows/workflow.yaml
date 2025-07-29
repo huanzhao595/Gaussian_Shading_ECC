@@ -9,7 +9,7 @@ jobs:
       repo:
         type: volume
     resources:
-      instance-type: C4
+      instance-type: C5
     uses: git-checkout@v1
     with:
       url: context.event.github.url
