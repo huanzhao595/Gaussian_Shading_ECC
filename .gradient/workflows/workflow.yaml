@@ -29,19 +29,14 @@ jobs:
         - -P
         - /outputs/pretrainedNetwork/
   HelloWorld:
-    needs:
-      - CloneRepo
-      - DownloadPretrained
     inputs:
       repo: CloneRepo.outputs.repo
       pretrained: DownloadPretrained.outputs.pretrainedNetwork
-    # outputs:
-    #   results:
-    #     type: dataset
-    #     with:
-    #       ref: demo-dataset
     resources:
       instance-type: P5000
+    needs:
+      - CloneRepo
+      - DownloadPretrained
     uses: script@v1
     with:
       image: paperspace/gradient-base:pt112-tf29-jax0317-py39-20230125
