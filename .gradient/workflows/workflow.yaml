@@ -1,11 +1,11 @@
-# 'on':
-#   github:
-#     branches:
-#       only: main
+'on':
+  github:
+    branches:
+      only: main
 jobs:
   CloneRepo:
     resources:
-      instance-type: P4000
+      instance-type: C4
     outputs:
       repo:
         type: volume
@@ -20,18 +20,13 @@ jobs:
     inputs:
       repo: CloneRepo.outputs.repo
     outputs:
-      repo:
-        type: volume
+      pretrainedModel:
+        type: dataset
+        with:
+          ref: Diffusion-laion-laion2b_s12b_b42k
     uses: script@v1
     with:
       script: |-
-        ls -ld .                     
-        ls -ld /inputs/repo          
-        ls -ld /outputs              
-        ls -ld /outputs/repo         
-        ls -la /outputs               
-        touch ./write_test.txt 2>/inputs/repo
-        touch ./write_test.txt 2>/outputs/repo
         cd /inputs/repo                         
         pip install -r requirements.txt
         python run_gaussian_shading.py \
