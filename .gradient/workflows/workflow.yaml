@@ -23,7 +23,7 @@ jobs:
       pretrainedModel:
         type: dataset
         with:
-          ref: Diffusion-laion-laion2b_s12b_b42k
+          ref: diffusion-laion-laion2b_s12b_b42k
     uses: script@v1
     with:
       script: |-
