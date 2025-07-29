@@ -7,7 +7,7 @@ jobs:
     resources:
       instance-type: C5
     outputs:
-      repo:
+      pretrainedNetwork:
         type: dataset
         with:
           ref: demo-dataset
