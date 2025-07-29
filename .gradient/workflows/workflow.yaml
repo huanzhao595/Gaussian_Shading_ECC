@@ -12,42 +12,19 @@ jobs:
     uses: git-checkout@v1
     with:
       url: context.event.github.url
-  CloneRepo2:
-    outputs:
-      repo2:
-        type: volume
-    resources:
-      instance-type: C5
-    uses: git-checkout@v1
-    with:
-      url: https://github.com/huanzhao595/Gaussian_Shading_ECC_pretrain.git
   DownloadPretrained:
     resources:
-      instance-type: P4000
-    needs:
-      - CloneRepo2
-    inputs:
-      repo2: CloneRepo2.outputs.repo2
+      instance-type: C5
     outputs:
       pretrainedNetwork:
         type: dataset
         with:
           ref: diffusion-laion-laion2b_s12b_b42k
-    uses: script@v1
+    uses: container@v1
     with:
-      image: paperspace/gradient-base:pt112-tf29-jax0317-py39-20230125
-      script: |-
-        cd /inputs/repo2
-        mkdir -p Diffusion/laion/laion2b_s12b_b42k
-        pip install -r requirements.txt
-        python run_gaussian_shading.py \
-          --jpeg_ratio 30 \
-          --fpr 0.000001 \
-          --channel_copy 1 \
-          --hw_copy 8 \
-          --chacha 1 \
-          --num 1 \
-          --reference_model ViT-g-14 \
-          --reference_model_pretrain pretrained_models/stylegan2-cat-config-f.pkl
-        mkdir -p /outputs/pretrainedNetwork
-        cp -r Diffusion/laion/laion2b_s12b_b42k/* /outputs/pretrainedNetwork/
+      image: alpine:latest
+      args:
+        - wget 
+        - https://huggingface.co/laion/CLIP-ViT-g-14-laion2B-s12B-b42K/resolve/main/open_clip_pytorch_model.bin
+        - -P
+        - /outputs/pretrainedNetwork/
