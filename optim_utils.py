@@ -47,6 +47,10 @@ def save_metrics(args, tpr_detection, tpr_traceability, acc, clip_scores):
 
     if args.reference_model is not None:
         with open(args.output_path + filename, "a") as file:
+            print("filename: ", filename, 'tpr_detection:' + str(tpr_detection / args.num) + '      ' +
+                       'tpr_traceability:' + str(tpr_traceability / args.num) + '      ' +
+                       'mean_acc:' + str(mean(acc)) + '      ' + 'std_acc:' + str(stdev(acc)) + '      ' +
+                       'mean_clip_score:' + str(mean(clip_scores)) + '      ' + 'std_clip_score:' + str(stdev(clip_scores)) + '      ' +)
             file.write('tpr_detection:' + str(tpr_detection / args.num) + '      ' +
                        'tpr_traceability:' + str(tpr_traceability / args.num) + '      ' +
                        'mean_acc:' + str(mean(acc)) + '      ' + 'std_acc:' + str(stdev(acc)) + '      ' +
@@ -55,6 +59,10 @@ def save_metrics(args, tpr_detection, tpr_traceability, acc, clip_scores):
 
     else:
         with open(args.output_path + filename, "a") as file:
+            print("filename: ", filename, 'tpr_detection:' + str(tpr_detection / args.num) + '      ' +
+                       'tpr_traceability:' + str(tpr_traceability / args.num) + '      ' +
+                       'mean_acc:' + str(mean(acc)) + '      ' + 'std_acc:' + str(stdev(acc)) + '      ' +
+                       'mean_clip_score:' + str(mean(clip_scores)) + '      ' + 'std_clip_score:' + str(stdev(clip_scores)) + '      ' +)
             file.write('tpr_detection:' + str(tpr_detection / args.num) + '      ' +
                        'tpr_traceability:' + str(tpr_traceability / args.num) + '      ' +
                        'mean_acc:' + str(mean(acc)) + '      ' + 'std_acc:' + str(stdev(acc)) + '      ' +
