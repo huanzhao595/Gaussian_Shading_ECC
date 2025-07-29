@@ -16,7 +16,7 @@ jobs:
     resources:
       instance-type: C5
     outputs:
-      pretrainedNetwork:
+      repo:
         type: dataset
         with:
           ref: diffusion-laion-laion2b_s12b_b42k
