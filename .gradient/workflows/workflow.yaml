@@ -3,15 +3,6 @@
     branches:
       only: main
 jobs:
-  CloneRepo:
-    outputs:
-      repo:
-        type: volume
-    resources:
-      instance-type: C5
-    uses: git-checkout@v1
-    with:
-      url: context.event.github.url
   getPretrainedModelCats:
     resources:
       instance-type: C5
@@ -19,7 +10,7 @@ jobs:
       repo:
         type: dataset
         with:
-          ref: diffusion-laion-laion2b_s12b_b42k
+          ref: demo-dataset
     uses: container@v1
     with:
       args:
