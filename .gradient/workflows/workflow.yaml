@@ -2,6 +2,7 @@
   github:
     branches:
       only: main
+  manual: true
 jobs:
   CloneRepo:
     outputs:
