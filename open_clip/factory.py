@@ -234,7 +234,7 @@ def create_model(
             print("model_name, pretrained", model_name,pretrained)
             if pretrained_cfg:
 
-                print("======11111111======")
+                # print("======11111111======")
                 # print(os.path.exists("inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # print(os.path.exists("/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # print(os.path.exists("./inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
@@ -249,9 +249,9 @@ def create_model(
                 
                 # print(os.path.exists("/Gaussian_Shading_ECC/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # 在你的逻辑里这样用：
-                filename = "open_clip_pytorch_model.bin"
-                checkpoint_path = locate_file(filename)
-                print(f"======[INFO] find pretrained at =====：{checkpoint_path}")
+                # filename = "open_clip_pytorch_model.bin"
+                # checkpoint_path = locate_file(filename)
+                # print(f"======[INFO] find pretrained at =====：{checkpoint_path}")
                 
 
 
