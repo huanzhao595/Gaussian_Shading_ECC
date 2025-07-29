@@ -149,7 +149,8 @@ if __name__ == '__main__':
     parser.add_argument('--hw_copy', default=8, type=int) # 8
     parser.add_argument('--user_number', default=1000000, type=int)
     parser.add_argument('--fpr', default=0.000001, type=float)
-    parser.add_argument('--output_path', default='./output/')
+    # parser.add_argument('--output_path', default='./output/')
+    parser.add_argument('--output_path', default='/outputs/results/')
     # parser.add_argument('--chacha', action='store_true', help='chacha20 for cipher')
     parser.add_argument('--chacha', type=int, default=1, help='Use ChaCha20 for cipher (1=on, 0=off)')
     parser.add_argument('--reference_model', default=None)
