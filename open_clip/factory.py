@@ -40,7 +40,7 @@ def locate_file(filename, search_paths=None):
     print("===current dir is ===", os.getcwd())
     if search_paths is None:
         # 你可以根据实际情况添加更多路径或挂载点
-        search_paths = ["/outputs/model_cache"] # os.path.expanduser("~"), "/inputs/repo", "/", 
+        search_paths = ["/inputs/"] # os.path.expanduser("~"), "/inputs/repo", "/", 
     
     for base_path in search_paths:
         print("base_path:", base_path)
@@ -234,7 +234,7 @@ def create_model(
             print("model_name, pretrained", model_name,pretrained)
             if pretrained_cfg:
 
-
+                print("======11111111======")
                 # print(os.path.exists("inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # print(os.path.exists("/inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # print(os.path.exists("./inputs/repo/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
@@ -243,20 +243,20 @@ def create_model(
                 # print(os.path.exists("Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # print(os.path.exists("/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # print(os.path.exists("./Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
-                print(os.path.exists("inputs/pretrained/open_clip_pytorch_model.bin"))
-                print(os.path.exists("/inputs/pretrained/open_clip_pytorch_model.bin"))
+                print(os.path.exists("Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
+                print(os.path.exists("/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 
                 
                 # print(os.path.exists("/Gaussian_Shading_ECC/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin"))
                 # 在你的逻辑里这样用：
-                # filename = "open_clip_pytorch_model.bin"
-                # checkpoint_path = locate_file(filename)
-                # print(f"======[INFO] find pretrained at =====：{checkpoint_path}")
+                filename = "open_clip_pytorch_model.bin"
+                checkpoint_path = locate_file(filename)
+                print(f"======[INFO] find pretrained at =====：{checkpoint_path}")
                 
 
 
                 # checkpoint_path = '/public/yangzijin/Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
-                checkpoint_path = 'inputs/pretrained/open_clip_pytorch_model.bin'
+                checkpoint_path = 'Diffusion/laion/laion2b_s12b_b42k/open_clip_pytorch_model.bin'
                 
 
 
