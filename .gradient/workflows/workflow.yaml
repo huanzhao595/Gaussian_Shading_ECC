@@ -15,7 +15,7 @@ jobs:
     with:
       args:
         - wget
-        - https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-cat-config-f.pkl
+        - https://huggingface.co/laion/CLIP-ViT-g-14-laion2B-s12B-b42K/resolve/main/open_clip_pytorch_model.bin
         - -P
         - /outputs/pretrainedNetwork
       image: alpine:latest
