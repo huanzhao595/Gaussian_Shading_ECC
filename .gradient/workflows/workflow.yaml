@@ -35,7 +35,7 @@ jobs:
     inputs:
       repo: CloneRepo.outputs.repo
       pretrained: DownloadPretrained.outputs.pretrainedNetwork
-    output:
+    outputs:
       results:
         type: dataset
         with:
